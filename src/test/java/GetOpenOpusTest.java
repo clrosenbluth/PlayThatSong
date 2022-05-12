@@ -1,4 +1,6 @@
 import json.ComposerSearch;
+import json.OpenOpusService;
+import json.OpenOpusServiceFactory;
 import json.WorkSearch;
 import org.junit.jupiter.api.Test;
 
@@ -6,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GetOpenOpusTest
 {
-    GetOpenOpus getOpenOpus = new GetOpenOpus();
+    OpenOpusServiceFactory factory = new OpenOpusServiceFactory();
+    OpenOpusService service = factory.getInstance();
 
     @Test
     void keywordSearch()
@@ -15,7 +18,7 @@ class GetOpenOpusTest
         String composerName = "bach";
 
         // when
-        ComposerSearch composerSearch = getOpenOpus.keywordSearch(composerName).blockingFirst();
+        ComposerSearch composerSearch = service.keywordSearch(composerName).blockingGet();
 
         // then
         assertTrue(composerSearch.getComposerNames().length > 0);
@@ -31,7 +34,7 @@ class GetOpenOpusTest
         int composerId = 100;
 
         // when
-        WorkSearch workSearch = getOpenOpus.idSearch(composerId).blockingFirst();
+        WorkSearch workSearch = service.idSearch(composerId).blockingGet();
 
         // then
         assertTrue(workSearch.getWorkNames().length > 0);
