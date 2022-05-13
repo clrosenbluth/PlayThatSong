@@ -127,8 +127,8 @@ public class ComposerSearchFrame extends JFrame
         Desktop desktop = Desktop.getDesktop();
         try
         {
-            String urlString = "https://www.youtube.com/results?search_query=" +
-                    URLEncoder.encode(composerWorks.getSelectedValue(), "UTF-8");
+            String urlString = "https://www.youtube.com/results?search_query="
+                    + URLEncoder.encode(composerWorks.getSelectedValue(), "UTF-8");
             info.setText(urlString);
         }
         catch (UnsupportedEncodingException e)
