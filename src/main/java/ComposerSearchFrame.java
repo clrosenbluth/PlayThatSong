@@ -13,7 +13,8 @@ public class ComposerSearchFrame extends JFrame
     private JButton searchButton;
     private JLabel info;
     private JPanel searchPanel;
-    private JList<String> searchResults = new JList<>();
+    private JList<String> composerSearchResults = new JList<>();
+    private JList<String> composerWorks = new JList<>();
     private JPanel searchResultPanel;
 
     private int[] composerIds;
@@ -95,17 +96,31 @@ public class ComposerSearchFrame extends JFrame
 
     public void addSearchResults(String[] composerNames, int[] composerIds)
     {
-        searchResults.setListData(composerNames);
-        searchResults.addListSelectionListener(this::onComposerClicked);
+        composerSearchResults.setListData(composerNames);
+        composerSearchResults.addListSelectionListener(this::onComposerClicked);
         this.composerIds = composerIds;
-        searchResultPanel.add(searchResults);
+        searchResultPanel.add(composerSearchResults);
         add(searchResultPanel);
     }
 
     private void onComposerClicked(ListSelectionEvent listSelectionEvent)
     {
-        int index = searchResults.getSelectedIndex();
+        int index = composerSearchResults.getSelectedIndex();
         presenter.loadComposerResult(composerIds[index]);
+    }
+
+    public void addComposerWorks(String[] works)
+    {
+        // todo: make scrollable, make sure both lists are shown (or that there's a back button)
+        composerWorks.setListData(works);
+        composerWorks.addListSelectionListener(this::onWorkClicked);
+        searchResultPanel.add(composerWorks);
+        add(searchResultPanel);
+    }
+
+    private void onWorkClicked(ListSelectionEvent listSelectionEvent)
+    {
+        // todo: add
     }
 
     public static void main(String[] args)

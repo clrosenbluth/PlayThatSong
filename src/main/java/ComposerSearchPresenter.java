@@ -48,7 +48,8 @@ public class ComposerSearchPresenter
 
     private void onIdSearchNext(WorkSearch workSearch)
     {
-        // todo: add
+        view.addComposerWorks(workSearch.getWorkNames());
+        view.setInfo("Showing works");
     }
 
     private void onIdSearchError(Throwable throwable)
