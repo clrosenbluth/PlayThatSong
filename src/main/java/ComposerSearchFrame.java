@@ -1,6 +1,7 @@
 import json.OpenOpusServiceFactory;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -10,8 +11,12 @@ public class ComposerSearchFrame extends JFrame
     private JPanel introPanel;
     private JTextField searchBar;
     private JButton searchButton;
-    private JButton[] searchResults;
+    private JLabel info;
     private JPanel searchPanel;
+    private JList<String> searchResults;
+    private JPanel searchResultPanel;
+
+    private int[] composerIds;
 
     private final OpenOpusServiceFactory factory = new OpenOpusServiceFactory();
     ComposerSearchPresenter presenter = new ComposerSearchPresenter(this, factory.getInstance());
@@ -28,6 +33,8 @@ public class ComposerSearchFrame extends JFrame
         addSearchPanel();
         addSearchBar();
         addSearchButton();
+        addInfo();
+        addSearchResultPanel();
     }
 
     private void addIntroPanel()
@@ -66,6 +73,39 @@ public class ComposerSearchFrame extends JFrame
     public void onSubmitClicked(ActionEvent event)
     {
         presenter.loadSearchResults(searchBar.getText());
+    }
+
+    private void addInfo()
+    {
+        info = new JLabel();
+        searchPanel.add(info);
+    }
+
+    public void setInfo(String text)
+    {
+        info.setText(text);
+    }
+
+    private void addSearchResultPanel()
+    {
+        searchResultPanel = new JPanel();
+        searchResultPanel.setLayout(new FlowLayout());
+        add(searchResultPanel);
+    }
+
+    public void addSearchResults(String[] composerNames, int[] composerIds)
+    {
+        searchResults = new JList<>(composerNames);
+        searchResults.addListSelectionListener(this::onComposerClicked);
+        this.composerIds = composerIds;
+        searchResultPanel.add(searchResults);
+        add(searchResultPanel);
+    }
+
+    private void onComposerClicked(ListSelectionEvent listSelectionEvent)
+    {
+        int index = searchResults.getSelectedIndex();
+        presenter.loadComposerResult(composerIds[index]);
     }
 
     public static void main(String[] args)

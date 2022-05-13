@@ -2,6 +2,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import json.ComposerSearch;
 import json.OpenOpusService;
+import json.WorkSearch;
 
 public class ComposerSearchPresenter
 {
@@ -19,20 +20,39 @@ public class ComposerSearchPresenter
         Disposable disposable = model.keywordSearch(searchTerm)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .subscribe(this::onNext, this::onError);
+                .subscribe(this::onKeywordSearchNext, this::onKeywordSearchError);
     }
 
-    private void onNext(ComposerSearch composerSearch)
+    private void onKeywordSearchNext(ComposerSearch composerSearch)
     {
-        // todo: add
-        /*double temp = currentWeather.getTemperature();
-        view.setTemperature(temp);*/
+        view.addSearchResults(
+                composerSearch.getComposerFullNames(),
+                composerSearch.getComposerIds());
+        view.setInfo("Returning " + composerSearch.getComposerFullNames().length + " results");
     }
 
-    private void onError(Throwable throwable)
+    private void onKeywordSearchError(Throwable throwable)
+    {
+        // todo: fix
+        view.setInfo("Error: " + throwable.getMessage());
+        throwable.printStackTrace();
+    }
+
+    public void loadComposerResult(int composerId)
+    {
+        Disposable disposable = model.idSearch(composerId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .subscribe(this::onIdSearchNext, this::onIdSearchError);
+    }
+
+    private void onIdSearchNext(WorkSearch workSearch)
     {
         // todo: add
-        /*view.showError("Error: " + throwable.getMessage());
-        throwable.printStackTrace();*/
+    }
+
+    private void onIdSearchError(Throwable throwable)
+    {
+        // todo: add
     }
 }
