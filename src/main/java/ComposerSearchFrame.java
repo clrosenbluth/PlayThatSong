@@ -13,7 +13,7 @@ public class ComposerSearchFrame extends JFrame
     private JButton searchButton;
     private JLabel info;
     private JPanel searchPanel;
-    private JList<String> searchResults;
+    private JList<String> searchResults = new JList<>();
     private JPanel searchResultPanel;
 
     private int[] composerIds;
@@ -95,7 +95,7 @@ public class ComposerSearchFrame extends JFrame
 
     public void addSearchResults(String[] composerNames, int[] composerIds)
     {
-        searchResults = new JList<>(composerNames);
+        searchResults.setListData(composerNames);
         searchResults.addListSelectionListener(this::onComposerClicked);
         this.composerIds = composerIds;
         searchResultPanel.add(searchResults);
