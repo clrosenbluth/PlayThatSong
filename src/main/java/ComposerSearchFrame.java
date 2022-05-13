@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class ComposerSearchFrame extends JFrame
 {
@@ -120,7 +123,19 @@ public class ComposerSearchFrame extends JFrame
 
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
-        // todo: add
+        // todo: fix
+        Desktop desktop = Desktop.getDesktop();
+        try
+        {
+            String urlString = "https://www.youtube.com/results?search_query=" +
+                    URLEncoder.encode(composerWorks.getSelectedValue(), "UTF-8");
+            info.setText(urlString);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            info.setText(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args)
