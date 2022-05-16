@@ -4,6 +4,14 @@ import json.ComposerSearch;
 import json.OpenOpusService;
 import json.WorkSearch;
 
+import java.awt.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class ComposerSearchPresenter
 {
     private ComposerSearchFrame view;
@@ -25,7 +33,7 @@ public class ComposerSearchPresenter
 
     private void onKeywordSearchNext(ComposerSearch composerSearch)
     {
-        view.addSearchResults(
+        view.addComposerSearchResults(
                 composerSearch.getComposerFullNames(),
                 composerSearch.getComposerIds());
         view.setInfo("Returning " + composerSearch.getComposerFullNames().length + " results");
@@ -33,7 +41,6 @@ public class ComposerSearchPresenter
 
     private void onKeywordSearchError(Throwable throwable)
     {
-        // todo: fix
         view.setInfo("Error: " + throwable.getMessage());
         throwable.printStackTrace();
     }
@@ -54,6 +61,24 @@ public class ComposerSearchPresenter
 
     private void onIdSearchError(Throwable throwable)
     {
-        // todo: add
+        view.setInfo("Error: " + throwable.getMessage());
+        throwable.printStackTrace();
+    }
+
+    public void openWorkInBrowser(String workName)
+    {
+        Desktop desktop = Desktop.getDesktop();
+        try
+        {
+            String urlString = "https://www.youtube.com/results?search_query="
+                    + URLEncoder.encode(workName, "UTF-8");
+            desktop.browse(new URL(urlString).toURI());
+            view.setInfo(urlString);
+        }
+        catch (URISyntaxException | IOException e)
+        {
+            view.setInfo(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

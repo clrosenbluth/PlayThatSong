@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 public class ComposerSearchFrame extends JFrame
 {
@@ -97,7 +96,7 @@ public class ComposerSearchFrame extends JFrame
         add(searchResultPanel);
     }
 
-    public void addSearchResults(String[] composerNames, int[] composerIds)
+    public void addComposerSearchResults(String[] composerNames, int[] composerIds)
     {
         composerSearchResults.setListData(composerNames);
         composerSearchResults.addListSelectionListener(this::onComposerClicked);
@@ -124,18 +123,7 @@ public class ComposerSearchFrame extends JFrame
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
         // todo: fix
-        Desktop desktop = Desktop.getDesktop();
-        try
-        {
-            String urlString = "https://www.youtube.com/results?search_query="
-                    + URLEncoder.encode(composerWorks.getSelectedValue(), "UTF-8");
-            info.setText(urlString);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            info.setText(e.getMessage());
-            e.printStackTrace();
-        }
+        presenter.openWorkInBrowser(composerWorks.getSelectedValue());
     }
 
     public static void main(String[] args)
