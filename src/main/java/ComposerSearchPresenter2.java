@@ -6,15 +6,16 @@ import json.WorkSearch;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 
-public class ComposerSearchPresenter
+public class ComposerSearchPresenter2
 {
-    private ComposerSearchFrame view;
+    private ComposerSearchFrame2 view;
     private OpenOpusService model;
 
-    public ComposerSearchPresenter(ComposerSearchFrame view, OpenOpusService model)
+    public ComposerSearchPresenter2(ComposerSearchFrame2 view, OpenOpusService model)
     {
         this.view = view;
         this.model = model;
