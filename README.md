@@ -1,4 +1,7 @@
-#Play That Song
+# Play That Song
+
+This is a project that I made in my computer methodology class. It uses the OpenOpus api to allow users to look up a 
+classical composer, view that composer's work, and click on a work to automatically search for it on YouTube.
 
 - [OpenOpus api](https://openopus.org/)
 - [Retrofit](https://square.github.io/retrofit/)
