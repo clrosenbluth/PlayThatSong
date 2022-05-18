@@ -4,10 +4,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class ComposerSearchFrame extends JFrame
 {
@@ -19,7 +15,6 @@ public class ComposerSearchFrame extends JFrame
     private JPanel searchPanel;
     private JList<String> composerSearchResults = new JList<>();
     private JList<String> composerWorks = new JList<>();
-    private JPanel searchResultPanel;
 
     private int[] composerIds;
 
@@ -28,40 +23,32 @@ public class ComposerSearchFrame extends JFrame
 
     public ComposerSearchFrame()
     {
+        composerSearchResults.addListSelectionListener(this::onComposerClicked);
         composerWorks.addListSelectionListener(this::onWorkClicked);
 
         setTitle("Play That Song");
         setSize(1000, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
-        addIntroPanel();
-        addIntro();
         addSearchPanel();
+        addIntro();
         addSearchBar();
         addSearchButton();
         addInfo();
-        addSearchResultPanel();
-    }
-
-    private void addIntroPanel()
-    {
-        introPanel = new JPanel();
-        introPanel.setLayout(new FlowLayout());
-        add(introPanel);
-    }
-
-    private void addIntro()
-    {
-        intro = new JLabel("Enter a composer's name and press search:");
-        introPanel.add(intro);
     }
 
     private void addSearchPanel()
     {
         searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout());
-        add(searchPanel);
+        add(searchPanel, BorderLayout.NORTH);
+    }
+
+    private void addIntro()
+    {
+        intro = new JLabel("Enter a composer's name and press search:");
+        searchPanel.add(intro);
     }
 
     private void addSearchBar()
@@ -93,20 +80,11 @@ public class ComposerSearchFrame extends JFrame
         info.setText(text);
     }
 
-    private void addSearchResultPanel()
-    {
-        searchResultPanel = new JPanel();
-        searchResultPanel.setLayout(new FlowLayout());
-        add(searchResultPanel);
-    }
-
     public void addComposerSearchResults(String[] composerNames, int[] composerIds)
     {
         composerSearchResults.setListData(composerNames);
-        composerSearchResults.addListSelectionListener(this::onComposerClicked);
         this.composerIds = composerIds;
-        searchResultPanel.add(composerSearchResults);
-        add(searchResultPanel);
+        add(composerSearchResults, BorderLayout.WEST);
     }
 
     private void onComposerClicked(ListSelectionEvent listSelectionEvent)
@@ -119,14 +97,16 @@ public class ComposerSearchFrame extends JFrame
     {
         // todo: make scrollable, make sure both lists are shown (or that there's a back button)
         composerWorks.setListData(works);
-        searchResultPanel.add(composerWorks);
-        add(searchResultPanel);
+        add(composerWorks, BorderLayout.CENTER);
     }
 
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
         // todo: fix
-        presenter.openWorkInBrowser(composerWorks.getSelectedValue());
+        if (!listSelectionEvent.getValueIsAdjusting())
+        {
+            presenter.openWorkInBrowser(composerWorks.getSelectedValue());
+        }
     }
 
     public static void main(String[] args)
