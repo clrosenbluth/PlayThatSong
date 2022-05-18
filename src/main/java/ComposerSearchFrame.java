@@ -8,13 +8,12 @@ import java.awt.event.ActionEvent;
 public class ComposerSearchFrame extends JFrame
 {
     private JLabel intro;
-    private JPanel introPanel;
     private JTextField searchBar;
     private JButton searchButton;
     private JLabel info;
     private JPanel searchPanel;
-    private JList<String> composerSearchResults = new JList<>();
-    private JList<String> composerWorks = new JList<>();
+    private final JList<String> composerSearchResults = new JList<>();
+    private final JList<String> composerWorks = new JList<>();
 
     private int[] composerIds;
 
@@ -54,6 +53,7 @@ public class ComposerSearchFrame extends JFrame
     private void addSearchBar()
     {
         searchBar = new JTextField(30);
+        searchBar.setText("Bach");
         searchPanel.add(searchBar);
     }
 
@@ -89,20 +89,22 @@ public class ComposerSearchFrame extends JFrame
 
     private void onComposerClicked(ListSelectionEvent listSelectionEvent)
     {
-        int index = composerSearchResults.getSelectedIndex();
-        presenter.loadComposerResult(composerIds[index]);
+        if (!listSelectionEvent.getValueIsAdjusting())
+        {
+            int index = composerSearchResults.getSelectedIndex();
+            presenter.loadComposerResult(composerIds[index]);
+        }
     }
 
     public void addComposerWorks(String[] works)
     {
-        // todo: make scrollable, make sure both lists are shown (or that there's a back button)
         composerWorks.setListData(works);
-        add(composerWorks, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(composerWorks);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
-        // todo: fix
         if (!listSelectionEvent.getValueIsAdjusting())
         {
             presenter.openWorkInBrowser(composerWorks.getSelectedValue());
