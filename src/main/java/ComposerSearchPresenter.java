@@ -6,7 +6,6 @@ import json.WorkSearch;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.*;
 
 public class ComposerSearchPresenter
