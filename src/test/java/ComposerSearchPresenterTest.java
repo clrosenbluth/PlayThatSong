@@ -65,7 +65,7 @@ class ComposerSearchPresenterTest
         presenter.loadComposerResult(5);
 
         // then
-        verify(view).addComposerWorks(workList);
+        verify(view).setComposerWorks(workList);
     }
 
     /*

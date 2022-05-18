@@ -35,6 +35,7 @@ public class ComposerSearchFrame extends JFrame
         addSearchBar();
         addSearchButton();
         addInfo();
+        addComposerWorks();
     }
 
     private void addSearchPanel()
@@ -66,6 +67,7 @@ public class ComposerSearchFrame extends JFrame
 
     public void onSubmitClicked(ActionEvent event)
     {
+        composerWorks.setModel(new DefaultListModel<>());
         presenter.loadSearchResults(searchBar.getText());
     }
 
@@ -89,23 +91,27 @@ public class ComposerSearchFrame extends JFrame
 
     private void onComposerClicked(ListSelectionEvent listSelectionEvent)
     {
-        if (!listSelectionEvent.getValueIsAdjusting())
+        if (!listSelectionEvent.getValueIsAdjusting() && composerSearchResults.getSelectedIndex() != -1)
         {
             int index = composerSearchResults.getSelectedIndex();
             presenter.loadComposerResult(composerIds[index]);
         }
     }
 
-    public void addComposerWorks(String[] works)
+    public void addComposerWorks()
     {
-        composerWorks.setListData(works);
         JScrollPane scrollPane = new JScrollPane(composerWorks);
         add(scrollPane, BorderLayout.CENTER);
     }
 
+    public void setComposerWorks(String[] works)
+    {
+        composerWorks.setListData(works);
+    }
+
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
-        if (!listSelectionEvent.getValueIsAdjusting())
+        if (!listSelectionEvent.getValueIsAdjusting() && composerSearchResults.getSelectedIndex() != -1)
         {
             presenter.openWorkInBrowser(composerWorks.getSelectedValue());
         }
