@@ -15,7 +15,6 @@ public class ComposerSearchFrame extends JFrame
     private final JList<String> composerSearchResults = new JList<>();
     private final JList<String> composerWorks = new JList<>();
 
-    private int[] composerIds;
 
     private final OpenOpusServiceFactory factory = new OpenOpusServiceFactory();
     ComposerSearchPresenter presenter = new ComposerSearchPresenter(this, factory.getInstance());
@@ -82,10 +81,9 @@ public class ComposerSearchFrame extends JFrame
         info.setText(text);
     }
 
-    public void addComposerSearchResults(String[] composerNames, int[] composerIds)
+    public void addComposerSearchResults(String[] composerNames)
     {
         composerSearchResults.setListData(composerNames);
-        this.composerIds = composerIds;
         add(composerSearchResults, BorderLayout.WEST);
     }
 
@@ -94,8 +92,7 @@ public class ComposerSearchFrame extends JFrame
         if (!listSelectionEvent.getValueIsAdjusting()
                 && composerSearchResults.getSelectedIndex() != -1)
         {
-            int index = composerSearchResults.getSelectedIndex();
-            presenter.loadComposerResult(composerIds[index]);
+            presenter.loadComposerResult(composerSearchResults.getSelectedIndex());
         }
     }
 

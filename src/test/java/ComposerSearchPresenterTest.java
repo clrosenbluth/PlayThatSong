@@ -46,7 +46,7 @@ class ComposerSearchPresenterTest
         presenter.loadSearchResults("Bach");
 
         // then
-        verify(view).addComposerSearchResults(composerList, idList);
+        verify(view).addComposerSearchResults(composerList);
     }
 
     @Test

@@ -13,6 +13,8 @@ public class ComposerSearchPresenter
     private ComposerSearchFrame view;
     private OpenOpusService model;
 
+    private int[] composerIds;
+
     public ComposerSearchPresenter(ComposerSearchFrame view, OpenOpusService model)
     {
         this.view = view;
@@ -29,9 +31,8 @@ public class ComposerSearchPresenter
 
     private void onKeywordSearchNext(ComposerSearch composerSearch)
     {
-        view.addComposerSearchResults(
-                composerSearch.getComposerFullNames(),
-                composerSearch.getComposerIds());
+        composerIds = composerSearch.getComposerIds();
+        view.addComposerSearchResults(composerSearch.getComposerFullNames());
         view.setInfo("Returning " + composerSearch.getComposerFullNames().length + " results");
     }
 
@@ -41,9 +42,9 @@ public class ComposerSearchPresenter
         throwable.printStackTrace();
     }
 
-    public void loadComposerResult(int composerId)
+    public void loadComposerResult(int index)
     {
-        Disposable disposable = model.idSearch(composerId)
+        Disposable disposable = model.idSearch(composerIds[index])
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .subscribe(this::onIdSearchNext, this::onIdSearchError);
