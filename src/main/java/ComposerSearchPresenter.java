@@ -70,8 +70,7 @@ public class ComposerSearchPresenter
                     + URLEncoder.encode(workName, "UTF-8");
             Desktop.getDesktop().browse(new URI(urlString));
             view.setInfo(urlString);
-        }
-        catch (URISyntaxException | IOException e)
+        } catch (URISyntaxException | IOException e)
         {
             view.setInfo(e.getMessage());
             e.printStackTrace();
