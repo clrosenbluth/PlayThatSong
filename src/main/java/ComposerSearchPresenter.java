@@ -12,20 +12,20 @@ public class ComposerSearchPresenter
 {
     private ComposerSearchFrame view;
     private OpenOpusService model;
-
     private int[] composerIds;
 
     public ComposerSearchPresenter(ComposerSearchFrame view, OpenOpusService model)
     {
         this.view = view;
         this.model = model;
+
     }
 
     public void loadSearchResults(String searchTerm)
     {
         Disposable disposable = model.keywordSearch(searchTerm)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
                 .subscribe(this::onKeywordSearchNext, this::onKeywordSearchError);
     }
 
@@ -45,8 +45,8 @@ public class ComposerSearchPresenter
     public void loadComposerResult(int index)
     {
         Disposable disposable = model.idSearch(composerIds[index])
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
                 .subscribe(this::onIdSearchNext, this::onIdSearchError);
     }
 
@@ -75,5 +75,10 @@ public class ComposerSearchPresenter
             view.setInfo(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void setComposerIds(int[] ids)
+    {
+        this.composerIds = ids;
     }
 }

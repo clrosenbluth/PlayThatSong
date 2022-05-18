@@ -53,7 +53,6 @@ public class ComposerSearchFrame extends JFrame
     private void addSearchBar()
     {
         searchBar = new JTextField(30);
-        searchBar.setText("Bach");
         searchPanel.add(searchBar);
     }
 

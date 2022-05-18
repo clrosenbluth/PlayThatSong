@@ -54,15 +54,17 @@ class ComposerSearchPresenterTest
     {
         // given
         String[] workList = new String[] {"Concerto"};
+        int[] ids = new int[] {1, 2, 3};
 
         WorkSearch workSearch = mock(WorkSearch.class);
         doReturn(workList)
                 .when(workSearch).getWorkNames();
         doReturn(Single.just(workSearch))
-                .when(model).idSearch(5);
+                .when(model).idSearch(1);
 
         // when
-        presenter.loadComposerResult(5);
+        presenter.setComposerIds(ids);
+        presenter.loadComposerResult(0);
 
         // then
         verify(view).setComposerWorks(workList);
