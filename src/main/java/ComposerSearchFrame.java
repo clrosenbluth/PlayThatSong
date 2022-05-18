@@ -91,7 +91,8 @@ public class ComposerSearchFrame extends JFrame
 
     private void onComposerClicked(ListSelectionEvent listSelectionEvent)
     {
-        if (!listSelectionEvent.getValueIsAdjusting() && composerSearchResults.getSelectedIndex() != -1)
+        if (!listSelectionEvent.getValueIsAdjusting()
+                && composerSearchResults.getSelectedIndex() != -1)
         {
             int index = composerSearchResults.getSelectedIndex();
             presenter.loadComposerResult(composerIds[index]);
@@ -111,7 +112,8 @@ public class ComposerSearchFrame extends JFrame
 
     private void onWorkClicked(ListSelectionEvent listSelectionEvent)
     {
-        if (!listSelectionEvent.getValueIsAdjusting() && composerSearchResults.getSelectedIndex() != -1)
+        if (!listSelectionEvent.getValueIsAdjusting()
+                && composerSearchResults.getSelectedIndex() != -1)
         {
             presenter.openWorkInBrowser(composerWorks.getSelectedValue());
         }
