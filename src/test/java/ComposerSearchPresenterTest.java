@@ -12,9 +12,11 @@ import static org.mockito.Mockito.*;
 class ComposerSearchPresenterTest
 {
     private final ComposerSearchFrame view = mock(ComposerSearchFrame.class);
-    private final Provider<ComposerSearchFrame> viewProvider = () -> view;;
+    private final Provider<ComposerSearchFrame> viewProvider = () -> view;
     private final OpenOpusService model = mock(OpenOpusService.class);
-    private final ComposerSearchPresenter presenter = new ComposerSearchPresenter(viewProvider, model);
+    private final ComposerSearchPresenter presenter = new ComposerSearchPresenter(
+            viewProvider,
+            model);
 
     @BeforeAll
     public static void beforeAllTests()

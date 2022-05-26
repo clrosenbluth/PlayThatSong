@@ -39,7 +39,9 @@ public class ComposerSearchPresenter
     {
         composerIds = composerSearch.getComposerIds();
         viewProvider.get().addComposerSearchResults(composerSearch.getComposerFullNames());
-        viewProvider.get().setInfo("Returning " + composerSearch.getComposerFullNames().length + " results");
+        viewProvider.get().setInfo("Returning " +
+                composerSearch.getComposerFullNames().length +
+                " results");
     }
 
     private void onKeywordSearchError(Throwable throwable)
