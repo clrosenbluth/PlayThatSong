@@ -6,19 +6,15 @@ import json.OpenOpusService;
 import json.WorkSearch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import static org.junit.jupiter.api.Assertions.*;
+import javax.inject.Provider;
 import static org.mockito.Mockito.*;
 
 class ComposerSearchPresenterTest
 {
     private final ComposerSearchFrame view = mock(ComposerSearchFrame.class);
+    private final Provider<ComposerSearchFrame> viewProvider = () -> view;;
     private final OpenOpusService model = mock(OpenOpusService.class);
-    private final ComposerSearchPresenter presenter = new ComposerSearchPresenter(view, model);
+    private final ComposerSearchPresenter presenter = new ComposerSearchPresenter(viewProvider, model);
 
     @BeforeAll
     public static void beforeAllTests()
