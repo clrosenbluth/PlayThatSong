@@ -4,6 +4,7 @@ import json.ComposerSearch;
 import json.OpenOpusService;
 import json.WorkSearch;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.awt.*;
@@ -17,11 +18,13 @@ public class ComposerSearchPresenter
     private final OpenOpusService model;
     private int[] composerIds;
 
-    public ComposerSearchPresenter(Provider<ComposerSearchFrame> viewProvider, OpenOpusService model)
+    @Inject
+    public ComposerSearchPresenter(
+            Provider<ComposerSearchFrame> viewProvider,
+            OpenOpusService model)
     {
         this.viewProvider = viewProvider;
         this.model = model;
-
     }
 
     public void loadSearchResults(String searchTerm)
