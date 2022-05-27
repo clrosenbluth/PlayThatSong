@@ -1,24 +1,32 @@
+package swing;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import json.ComposerSearch;
 import json.OpenOpusService;
 import json.WorkSearch;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 import java.awt.*;
 import java.io.IOException;
 import java.net.*;
 
+@Singleton
 public class ComposerSearchPresenter
 {
-    private ComposerSearchFrame view;
-    private OpenOpusService model;
+    private final Provider<ComposerSearchFrame> viewProvider;
+    private final OpenOpusService model;
     private int[] composerIds;
 
-    public ComposerSearchPresenter(ComposerSearchFrame view, OpenOpusService model)
+    @Inject
+    public ComposerSearchPresenter(
+            Provider<ComposerSearchFrame> viewProvider,
+            OpenOpusService model)
     {
-        this.view = view;
+        this.viewProvider = viewProvider;
         this.model = model;
-
     }
 
     public void loadSearchResults(String searchTerm)
@@ -32,13 +40,15 @@ public class ComposerSearchPresenter
     private void onKeywordSearchNext(ComposerSearch composerSearch)
     {
         composerIds = composerSearch.getComposerIds();
-        view.addComposerSearchResults(composerSearch.getComposerFullNames());
-        view.setInfo("Returning " + composerSearch.getComposerFullNames().length + " results");
+        viewProvider.get().addComposerSearchResults(composerSearch.getComposerFullNames());
+        viewProvider.get().setInfo("Returning "
+                + composerSearch.getComposerFullNames().length
+                + " results");
     }
 
     private void onKeywordSearchError(Throwable throwable)
     {
-        view.setInfo("Error: " + throwable.getMessage());
+        viewProvider.get().setInfo("Error: " + throwable.getMessage());
         throwable.printStackTrace();
     }
 
@@ -52,13 +62,13 @@ public class ComposerSearchPresenter
 
     private void onIdSearchNext(WorkSearch workSearch)
     {
-        view.setComposerWorks(workSearch.getWorkNames());
-        view.setInfo("Showing works");
+        viewProvider.get().setComposerWorks(workSearch.getWorkNames());
+        viewProvider.get().setInfo("Showing works");
     }
 
     private void onIdSearchError(Throwable throwable)
     {
-        view.setInfo("Error: " + throwable.getMessage());
+        viewProvider.get().setInfo("Error: " + throwable.getMessage());
         throwable.printStackTrace();
     }
 
@@ -69,10 +79,10 @@ public class ComposerSearchPresenter
             String urlString = "https://www.youtube.com/results?search_query="
                     + URLEncoder.encode(workName, "UTF-8");
             Desktop.getDesktop().browse(new URI(urlString));
-            view.setInfo(urlString);
+            viewProvider.get().setInfo(urlString);
         } catch (URISyntaxException | IOException e)
         {
-            view.setInfo(e.getMessage());
+            viewProvider.get().setInfo(e.getMessage());
             e.printStackTrace();
         }
     }

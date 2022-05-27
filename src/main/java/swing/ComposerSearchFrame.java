@@ -1,26 +1,29 @@
-import json.OpenOpusServiceFactory;
+package swing;
 
+import dagger.DaggerComposerSearchComponent;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+@Singleton
 public class ComposerSearchFrame extends JFrame
 {
-    private JLabel intro;
     private JTextField searchBar;
-    private JButton searchButton;
     private JLabel info;
     private JPanel searchPanel;
     private final JList<String> composerSearchResults = new JList<>();
     private final JList<String> composerWorks = new JList<>();
+    private final ComposerSearchPresenter presenter;
 
-
-    private final OpenOpusServiceFactory factory = new OpenOpusServiceFactory();
-    ComposerSearchPresenter presenter = new ComposerSearchPresenter(this, factory.getInstance());
-
-    public ComposerSearchFrame()
+    @Inject
+    public ComposerSearchFrame(ComposerSearchPresenter presenter)
     {
+        this.presenter = presenter;
+
         composerSearchResults.addListSelectionListener(this::onComposerClicked);
         composerWorks.addListSelectionListener(this::onWorkClicked);
 
@@ -46,7 +49,7 @@ public class ComposerSearchFrame extends JFrame
 
     private void addIntro()
     {
-        intro = new JLabel("Enter a composer's name and press search:");
+        JLabel intro = new JLabel("Enter a composer's name and press search:");
         searchPanel.add(intro);
     }
 
@@ -58,7 +61,7 @@ public class ComposerSearchFrame extends JFrame
 
     private void addSearchButton()
     {
-        searchButton = new JButton("Search");
+        JButton searchButton = new JButton("Search");
         searchButton.addActionListener(this::onSubmitClicked);
         searchPanel.add(searchButton);
     }
@@ -117,7 +120,8 @@ public class ComposerSearchFrame extends JFrame
 
     public static void main(String[] args)
     {
-        JFrame frame = new ComposerSearchFrame();
+        ComposerSearchFrame frame = DaggerComposerSearchComponent.create()
+                        .getComposerSearchFrame();
         frame.setVisible(true);
     }
 
