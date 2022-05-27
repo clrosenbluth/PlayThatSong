@@ -1,5 +1,7 @@
 package dagger;
 
+import swing.ComposerSearchFrame;
+
 import javax.inject.Singleton;
 
 @Singleton

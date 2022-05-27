@@ -1,3 +1,7 @@
+package swing;
+
+import dagger.DaggerComposerSearchComponent;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.swing.*;
@@ -8,9 +12,7 @@ import java.awt.event.ActionEvent;
 @Singleton
 public class ComposerSearchFrame extends JFrame
 {
-    private JLabel intro;
     private JTextField searchBar;
-    private JButton searchButton;
     private JLabel info;
     private JPanel searchPanel;
     private final JList<String> composerSearchResults = new JList<>();
@@ -47,7 +49,7 @@ public class ComposerSearchFrame extends JFrame
 
     private void addIntro()
     {
-        intro = new JLabel("Enter a composer's name and press search:");
+        JLabel intro = new JLabel("Enter a composer's name and press search:");
         searchPanel.add(intro);
     }
 
@@ -59,7 +61,7 @@ public class ComposerSearchFrame extends JFrame
 
     private void addSearchButton()
     {
-        searchButton = new JButton("Search");
+        JButton searchButton = new JButton("Search");
         searchButton.addActionListener(this::onSubmitClicked);
         searchPanel.add(searchButton);
     }

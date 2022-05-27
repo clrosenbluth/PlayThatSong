@@ -6,6 +6,9 @@ import json.OpenOpusService;
 import json.WorkSearch;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import swing.ComposerSearchFrame;
+import swing.ComposerSearchPresenter;
+
 import javax.inject.Provider;
 import static org.mockito.Mockito.*;
 
